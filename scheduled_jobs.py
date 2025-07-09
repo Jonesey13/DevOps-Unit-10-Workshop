@@ -38,11 +38,11 @@ def process_orders(app):
         
         try:
             response.raise_for_status()
+            order.set_as_processed()
         except:
             app.logger.exception("Error processing order {id}".format(id = order.id))
             order.set_as_failed()
 
-        order.set_as_processed()
         save_order(order)
 
 def get_queue_of_orders_to_process():
